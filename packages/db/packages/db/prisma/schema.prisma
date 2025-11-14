@@ -1,0 +1,123 @@
+generator client {
+    provider = "prisma-client-js"
+    output   =  "../src/generated/client"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("DATABASE_URL")
+    directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model Organization {
+    id                String    @id @default(cuid())
+    clerkOrgId        String    @unique
+    name              String  
+    slug              String    @unique
+    stripeCustomerId  String?   @unique
+    plan              Plan      @default(FREE)
+    createdAt         DateTime  @default(now())
+    updatedAt         DateTime  @updatedAt
+
+
+    users           User[]
+    posts           Post[]
+    socialAccounts  SocialAccount[]
+
+    @@map("organizations")
+}
+
+
+model User {
+    id        String @id @default(cuid())
+    clerkId   String @unique
+    email     String @unique
+    firstName String? 
+    lastName String? 
+    imageUrl String?
+    role     Role     @default(MEMBER) 
+
+    orgId    String
+    org      Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([orgId])
+    @@map("users")
+}
+
+model Post {
+    id          String  @id @default(cuid())
+    content     String  @db.Text
+    mediaUrls   String[]  
+    platfoms    Platform[]
+    status      PostStatus @default(SCHEDULED)
+
+    scheduledAt DateTime
+    publishedAt DateTime?
+
+    orgId       String
+    org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+
+    views      Int    @default(0)
+    likes      Int    @default(0)
+    shares     Int    @default(0)
+    comments   Int    @default(0)
+
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+
+    @@index([orgId, scheduledAt])
+    @@index([status,scheduledAt])
+    
+    @@map("posts")
+}
+
+model SocialAccount {
+    id           String   @id  @default(cuid())
+    platform     Platform
+    accountName  String
+    accessToken  String   @db.Text
+    refreshToken String? @db.Text
+    expiresAt    DateTime? 
+
+    orgId        String
+    org          Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+    isActive     Boolean  @default(true)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@unique([orgId, platform, accountName])
+    @@index([orgId])
+    @@map("social_accounts")
+}
+
+enum Plan {
+    FREE
+    PRO
+    ENTERPRISE
+}
+
+enum Role {
+    OWNER
+    ADMIN
+    MEMBER
+}
+
+enum Platform {
+    TWITTER
+    LINKEDIN
+    FACEBOOK
+    INSTAGRAM
+}
+
+enum PostStatus {
+    DRAFT
+    SCHEDULED
+    PUBLISHED
+    FAILED
+}
