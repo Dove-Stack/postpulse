@@ -49,15 +49,15 @@ export async function Navbar() {
             ) : (
               <>
                 <Link href="/sign-in">
-                  <Button variant="ghost" size="btnNav">
+                  <Button variant="ctaBtnTwo" size="btnNav">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/sign-up">
                   <Button
-                    variant="ghost"
+                    variant="ctaBtnOne"
                     size="lg"
-                    className="bg-gradient-to-br rounded-lg from-violet-900 to-purple-500 text-white hover:bg-violet-600"
+                    className="bg-violet-600 text-white hover:bg-violet-700"
                   >
                     Get Started
                   </Button>
