@@ -1,8 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Calendar, BarChart3, Zap } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
+import { HeroSection } from "@/components/ui/home/hero-section";
 
 export default async function HomePage() {
   const { userId } = await auth();
@@ -10,7 +8,10 @@ export default async function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-        <Navbar/>
+      <Navbar />
+      <main className="flex-1">
+        <HeroSection isAuthenticated={!!userId} />
+      </main>
     </div>
   );
 }
