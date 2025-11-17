@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@postpulse/validators" : ["../../packages/packages/validators/src/index.ts"]
     }
   },
   "include": [
