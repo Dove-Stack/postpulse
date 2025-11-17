@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Star } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../button";
 
@@ -8,7 +8,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ isAuthenticated }: HeroSectionProps) {
   return (
-    <section className="pt-32 pb-20 px-4 bg-gradient-to-b from-white via-violet-50 to bg-purple-100">
+    <section className="pt-32 pb-20 px-4 bg-gradient-to-b from-white via-violet-50 to bg-purple-300">
       <div className="max-w-6xl mx-auto text-center space-y-8">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-100 rounded-full text-violet-700 text-sm font-medium ">
           <Sparkles className="w-4 h-4" />
@@ -69,13 +69,14 @@ export function HeroSection({ isAuthenticated }: HeroSectionProps) {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 border-2 border-white"
+                  className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 border-2 border-white"
                 ></div>
               ))}
             </div>
             <span>Trusted by 10,000+ creators</span>
             <div className="flex items-center gap-2">
-              <span className="text-yellow-500">★★★★★</span>
+              {/* <span className="text-yellow-500">★★★★★</span> */}
+              {/* <Star fill="yellow" strokeWidth={0} /> */}
               <span>4.9/5 rating</span>
             </div>
           </div>
