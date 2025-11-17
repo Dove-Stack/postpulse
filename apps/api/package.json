@@ -1,0 +1,30 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts --esm",
+    "build": "tsc",
+    "start": "node dist/server.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.21.0",
+  "dependencies": {
+    "@clerk/backend": "^2.22.0",
+    "@clerk/fastify": "^2.6.1",
+    "@fastify/cors": "^11.1.0",
+    "dotenv": "^17.2.3",
+    "fastify": "^5.6.2",
+    "pino-pretty": "^13.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
