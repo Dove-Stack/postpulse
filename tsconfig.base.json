@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl":".",
+    "paths": {
+      "@postpulse/db": [
+        "packages/db/src/index.ts"
+      ]
+    },
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,

@@ -43,7 +43,7 @@ export default function NavbarCLient({ userId }: { userId: string | null }) {
             {userId ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost">Dashboard</Button>
+                  <Button >Dashboard</Button>
                 </Link>
                 <UserButton afterSignOutUrl="" />
               </>

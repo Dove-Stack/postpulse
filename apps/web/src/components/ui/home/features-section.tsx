@@ -52,7 +52,7 @@ export function FeaturesSection() {
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-6xl md:5xl font-bold text-gray-900">
             Everything you need to{" "}
-            <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-900 via-purple-600 to-pink-600  bg-clip-text text-transparent">
               grow faster
             </span>
           </h2>
@@ -64,7 +64,7 @@ export function FeaturesSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuresData.map((feature, index) => (
-            <div
+          <div
               key={index}
               className="group p-8 rounded-2xl border-purple-100 hover:border-purple-300 hover:shadow-xl transition-alll duration-300 bg-white hover:bg-gradient-to-br hover:from-violet-100 hover:to-purple-300"
             >

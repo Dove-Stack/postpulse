@@ -8,10 +8,10 @@ const plansData = [
     price: "$0",
     description: "Perfect for trying out PostPulse",
     features: [
-      "Up to 10 scheduled posts",
       "1 social account",
       "Basic analytics",
       "Communtiy support",
+      "Up to 10 scheduled posts",
     ],
     cta: "Get Started",
     highlighted: false,
@@ -21,12 +21,12 @@ const plansData = [
     price: "$29",
     description: "For serious content creators",
     features: [
-      "Unlimited Scheduled posts",
-      "10 social accounts",
-      "Advanced analytics & reporting",
-      "AI-powered timing suggestions",
       "Priority support",
+      "10 social accounts",
+      "Unlimited Scheduled posts",
       "Team collaboration (up to 5)",
+      "AI-powered timing suggestions",
+      "Advanced analytics & reporting",
     ],
     cta: "Start Free Trial",
     highlighted: true,
@@ -37,10 +37,10 @@ const plansData = [
     description: "For large teams and agencies",
     features: [
       "Everything in Pro",
-      "Unlimited social accounts",
       "Custom integrations",
-      "Dedicated account gurantees",
       "SLA & uptime gurantees",
+      "Unlimited social accounts",
+      "Dedicated account gurantees",
       "Advanced security & compliance",
     ],
     cta: "Contact Sales",
@@ -74,7 +74,7 @@ export function PricingSection() {
               className={`relative p-8 rounded-2xl border-2 transition-all duration-300 ${
                 plan.highlighted
                   ? "border-violet-500 shadow-2xl scale-105 bg-white"
-                  : "border-purple-100 hover:border-purple-300 bg-white hover:shadow-lg"
+                  : "border-purple-100 hover:border-purple-400 bg-white hover:shadow-lg"
               }`}
             >
               {plan.highlighted && (
@@ -83,26 +83,26 @@ export function PricingSection() {
                 </div>
               )}
 
-              <div className="mb-6 text-center ">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-violet-900 via-purple-600 to-pink-600  bg-clip-text text-transparent">
+              <div className="mb-6 ">
+                <h3 className="text-3xl font-serif font-bold bg-gradient-to-r from-violet-900 via-purple-600 to-pink-600  bg-clip-text text-transparent">
                   {plan.name}
                 </h3>
                 <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-5xl my-4 font-bold text-center mx-auto text-gray-900">
+                  <span className="text-5xl font-serif mt-3  p-3 font-extrabold bg-gradient-to-r from-pink-600 via-violet-600 to-purple-600  bg-clip-text text-transparent">
                     {plan.price}
                   </span>
                   {/* {plan.price !== "Custom"  && (
                     <span className="text-gray-600 ">/month</span>
                   )} */}
                 </div>
-                <p className="text-gray-600">{plan.description}</p>
+                <p className="text-gray-600 font-serif">{plan.description}</p>
               </div>
 
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-violet-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{feature}</span>
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="h-7 w-7 text-gray-200 flex-shrink-0 p-2 mt-0.5 rounded-full bg-gradient-to-t from-violet-700 via-purple-500 to-pink-500" />
+                    <span className="text-gray-700 font-bold ">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -111,10 +111,10 @@ export function PricingSection() {
                 <Button
                   className={`w-full  ${
                     plan.highlighted
-                      ? "bg-violet-600 text-white hover:bg-violet-700"
-                      : "bg-white text-violet-600 border-2 border-violet-200 hover:bg-violet-50"
+                      ? "bg-gradient-to-l from-violet-500 via-purple-600 to-pink-600 text-white hover:bg-violet-700 p-6 text-xs font rounded-md"
+                      : "bg-white text-violet-600 border-2 border-violet-200 hover:bg-violet-50 text-sm p-6 rounded-md shadow-none"
                   }`}
-                  size="lg"
+                  // size="lg"
                 >
                   {plan.cta}
                 </Button>

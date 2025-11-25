@@ -20,7 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@postpulse/validators" : ["../../packages/packages/validators/src/index.ts"]
+      "@postpulse/validators": [
+        "../../packages/packages/validators/src/index.ts"
+      ],
+      "@postpulse/db": ["../../packages/db/src/index.ts"]
     }
   },
   "include": [

@@ -1193,15 +1193,15 @@ export namespace Prisma {
    */
 
   export type OrganizationCountOutputType = {
-    users: number
     posts: number
     socialAccounts: number
+    users: number
   }
 
   export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | OrganizationCountOutputTypeCountUsersArgs
     posts?: boolean | OrganizationCountOutputTypeCountPostsArgs
     socialAccounts?: boolean | OrganizationCountOutputTypeCountSocialAccountsArgs
+    users?: boolean | OrganizationCountOutputTypeCountUsersArgs
   }
 
   // Custom InputTypes
@@ -1218,13 +1218,6 @@ export namespace Prisma {
   /**
    * OrganizationCountOutputType without action
    */
-  export type OrganizationCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
-  }
-
-  /**
-   * OrganizationCountOutputType without action
-   */
   export type OrganizationCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostWhereInput
   }
@@ -1234,6 +1227,13 @@ export namespace Prisma {
    */
   export type OrganizationCountOutputTypeCountSocialAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SocialAccountWhereInput
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -1429,9 +1429,9 @@ export namespace Prisma {
     plan?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    users?: boolean | Organization$usersArgs<ExtArgs>
     posts?: boolean | Organization$postsArgs<ExtArgs>
     socialAccounts?: boolean | Organization$socialAccountsArgs<ExtArgs>
+    users?: boolean | Organization$usersArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organization"]>
 
@@ -1470,9 +1470,9 @@ export namespace Prisma {
 
   export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkOrgId" | "name" | "slug" | "stripeCustomerId" | "plan" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | Organization$usersArgs<ExtArgs>
     posts?: boolean | Organization$postsArgs<ExtArgs>
     socialAccounts?: boolean | Organization$socialAccountsArgs<ExtArgs>
+    users?: boolean | Organization$usersArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1481,9 +1481,9 @@ export namespace Prisma {
   export type $OrganizationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Organization"
     objects: {
-      users: Prisma.$UserPayload<ExtArgs>[]
       posts: Prisma.$PostPayload<ExtArgs>[]
       socialAccounts: Prisma.$SocialAccountPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1888,9 +1888,9 @@ export namespace Prisma {
    */
   export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    users<T extends Organization$usersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     posts<T extends Organization$postsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     socialAccounts<T extends Organization$socialAccountsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$socialAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SocialAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    users<T extends Organization$usersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2316,30 +2316,6 @@ export namespace Prisma {
   }
 
   /**
-   * Organization.users
-   */
-  export type Organization$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
    * Organization.posts
    */
   export type Organization$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2385,6 +2361,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SocialAccountScalarFieldEnum | SocialAccountScalarFieldEnum[]
+  }
+
+  /**
+   * Organization.users
+   */
+  export type Organization$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -2577,7 +2577,7 @@ export namespace Prisma {
     lastName: string | null
     imageUrl: string | null
     role: $Enums.Role
-    orgId: string
+    orgId: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2610,7 +2610,7 @@ export namespace Prisma {
     orgId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    org?: boolean | OrganizationDefaultArgs<ExtArgs>
+    org?: boolean | User$orgArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2624,7 +2624,7 @@ export namespace Prisma {
     orgId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    org?: boolean | OrganizationDefaultArgs<ExtArgs>
+    org?: boolean | User$orgArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2638,7 +2638,7 @@ export namespace Prisma {
     orgId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    org?: boolean | OrganizationDefaultArgs<ExtArgs>
+    org?: boolean | User$orgArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2656,19 +2656,19 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkId" | "email" | "firstName" | "lastName" | "imageUrl" | "role" | "orgId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    org?: boolean | OrganizationDefaultArgs<ExtArgs>
+    org?: boolean | User$orgArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    org?: boolean | OrganizationDefaultArgs<ExtArgs>
+    org?: boolean | User$orgArgs<ExtArgs>
   }
   export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    org?: boolean | OrganizationDefaultArgs<ExtArgs>
+    org?: boolean | User$orgArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      org: Prisma.$OrganizationPayload<ExtArgs>
+      org: Prisma.$OrganizationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2678,7 +2678,7 @@ export namespace Prisma {
       lastName: string | null
       imageUrl: string | null
       role: $Enums.Role
-      orgId: string
+      orgId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -3075,7 +3075,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    org<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    org<T extends User$orgArgs<ExtArgs> = {}>(args?: Subset<T, User$orgArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3511,6 +3511,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.org
+   */
+  export type User$orgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Organization
+     */
+    select?: OrganizationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Organization
+     */
+    omit?: OrganizationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationInclude<ExtArgs> | null
+    where?: OrganizationWhereInput
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3589,7 +3608,7 @@ export namespace Prisma {
     id: number
     content: number
     mediaUrls: number
-    platfoms: number
+    platforms: number
     status: number
     scheduledAt: number
     publishedAt: number
@@ -3652,7 +3671,7 @@ export namespace Prisma {
     id?: true
     content?: true
     mediaUrls?: true
-    platfoms?: true
+    platforms?: true
     status?: true
     scheduledAt?: true
     publishedAt?: true
@@ -3756,7 +3775,7 @@ export namespace Prisma {
     id: string
     content: string
     mediaUrls: string[]
-    platfoms: $Enums.Platform[]
+    platforms: $Enums.Platform[]
     status: $Enums.PostStatus
     scheduledAt: Date
     publishedAt: Date | null
@@ -3792,7 +3811,7 @@ export namespace Prisma {
     id?: boolean
     content?: boolean
     mediaUrls?: boolean
-    platfoms?: boolean
+    platforms?: boolean
     status?: boolean
     scheduledAt?: boolean
     publishedAt?: boolean
@@ -3810,7 +3829,7 @@ export namespace Prisma {
     id?: boolean
     content?: boolean
     mediaUrls?: boolean
-    platfoms?: boolean
+    platforms?: boolean
     status?: boolean
     scheduledAt?: boolean
     publishedAt?: boolean
@@ -3828,7 +3847,7 @@ export namespace Prisma {
     id?: boolean
     content?: boolean
     mediaUrls?: boolean
-    platfoms?: boolean
+    platforms?: boolean
     status?: boolean
     scheduledAt?: boolean
     publishedAt?: boolean
@@ -3846,7 +3865,7 @@ export namespace Prisma {
     id?: boolean
     content?: boolean
     mediaUrls?: boolean
-    platfoms?: boolean
+    platforms?: boolean
     status?: boolean
     scheduledAt?: boolean
     publishedAt?: boolean
@@ -3859,7 +3878,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "mediaUrls" | "platfoms" | "status" | "scheduledAt" | "publishedAt" | "orgId" | "views" | "likes" | "shares" | "comments" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "mediaUrls" | "platforms" | "status" | "scheduledAt" | "publishedAt" | "orgId" | "views" | "likes" | "shares" | "comments" | "createdAt" | "updatedAt", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     org?: boolean | OrganizationDefaultArgs<ExtArgs>
   }
@@ -3879,7 +3898,7 @@ export namespace Prisma {
       id: string
       content: string
       mediaUrls: string[]
-      platfoms: $Enums.Platform[]
+      platforms: $Enums.Platform[]
       status: $Enums.PostStatus
       scheduledAt: Date
       publishedAt: Date | null
@@ -4317,7 +4336,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
     readonly mediaUrls: FieldRef<"Post", 'String[]'>
-    readonly platfoms: FieldRef<"Post", 'Platform[]'>
+    readonly platforms: FieldRef<"Post", 'Platform[]'>
     readonly status: FieldRef<"Post", 'PostStatus'>
     readonly scheduledAt: FieldRef<"Post", 'DateTime'>
     readonly publishedAt: FieldRef<"Post", 'DateTime'>
@@ -5913,7 +5932,7 @@ export namespace Prisma {
     id: 'id',
     content: 'content',
     mediaUrls: 'mediaUrls',
-    platfoms: 'platfoms',
+    platforms: 'platforms',
     status: 'status',
     scheduledAt: 'scheduledAt',
     publishedAt: 'publishedAt',
@@ -6108,9 +6127,9 @@ export namespace Prisma {
     plan?: EnumPlanFilter<"Organization"> | $Enums.Plan
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
-    users?: UserListRelationFilter
     posts?: PostListRelationFilter
     socialAccounts?: SocialAccountListRelationFilter
+    users?: UserListRelationFilter
   }
 
   export type OrganizationOrderByWithRelationInput = {
@@ -6122,9 +6141,9 @@ export namespace Prisma {
     plan?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    users?: UserOrderByRelationAggregateInput
     posts?: PostOrderByRelationAggregateInput
     socialAccounts?: SocialAccountOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
   }
 
   export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -6139,9 +6158,9 @@ export namespace Prisma {
     plan?: EnumPlanFilter<"Organization"> | $Enums.Plan
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
-    users?: UserListRelationFilter
     posts?: PostListRelationFilter
     socialAccounts?: SocialAccountListRelationFilter
+    users?: UserListRelationFilter
   }, "id" | "clerkOrgId" | "slug" | "stripeCustomerId">
 
   export type OrganizationOrderByWithAggregationInput = {
@@ -6183,10 +6202,10 @@ export namespace Prisma {
     lastName?: StringNullableFilter<"User"> | string | null
     imageUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    orgId?: StringFilter<"User"> | string
+    orgId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    org?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    org?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -6197,7 +6216,7 @@ export namespace Prisma {
     lastName?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
     role?: SortOrder
-    orgId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     org?: OrganizationOrderByWithRelationInput
@@ -6214,10 +6233,10 @@ export namespace Prisma {
     lastName?: StringNullableFilter<"User"> | string | null
     imageUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
-    orgId?: StringFilter<"User"> | string
+    orgId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    org?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    org?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
   }, "id" | "clerkId" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -6228,7 +6247,7 @@ export namespace Prisma {
     lastName?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
     role?: SortOrder
-    orgId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -6247,7 +6266,7 @@ export namespace Prisma {
     lastName?: StringNullableWithAggregatesFilter<"User"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
-    orgId?: StringWithAggregatesFilter<"User"> | string
+    orgId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -6259,7 +6278,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
     mediaUrls?: StringNullableListFilter<"Post">
-    platfoms?: EnumPlatformNullableListFilter<"Post">
+    platforms?: EnumPlatformNullableListFilter<"Post">
     status?: EnumPostStatusFilter<"Post"> | $Enums.PostStatus
     scheduledAt?: DateTimeFilter<"Post"> | Date | string
     publishedAt?: DateTimeNullableFilter<"Post"> | Date | string | null
@@ -6277,7 +6296,7 @@ export namespace Prisma {
     id?: SortOrder
     content?: SortOrder
     mediaUrls?: SortOrder
-    platfoms?: SortOrder
+    platforms?: SortOrder
     status?: SortOrder
     scheduledAt?: SortOrder
     publishedAt?: SortOrderInput | SortOrder
@@ -6298,7 +6317,7 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     content?: StringFilter<"Post"> | string
     mediaUrls?: StringNullableListFilter<"Post">
-    platfoms?: EnumPlatformNullableListFilter<"Post">
+    platforms?: EnumPlatformNullableListFilter<"Post">
     status?: EnumPostStatusFilter<"Post"> | $Enums.PostStatus
     scheduledAt?: DateTimeFilter<"Post"> | Date | string
     publishedAt?: DateTimeNullableFilter<"Post"> | Date | string | null
@@ -6316,7 +6335,7 @@ export namespace Prisma {
     id?: SortOrder
     content?: SortOrder
     mediaUrls?: SortOrder
-    platfoms?: SortOrder
+    platforms?: SortOrder
     status?: SortOrder
     scheduledAt?: SortOrder
     publishedAt?: SortOrderInput | SortOrder
@@ -6341,7 +6360,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Post"> | string
     content?: StringWithAggregatesFilter<"Post"> | string
     mediaUrls?: StringNullableListFilter<"Post">
-    platfoms?: EnumPlatformNullableListFilter<"Post">
+    platforms?: EnumPlatformNullableListFilter<"Post">
     status?: EnumPostStatusWithAggregatesFilter<"Post"> | $Enums.PostStatus
     scheduledAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     publishedAt?: DateTimeNullableWithAggregatesFilter<"Post"> | Date | string | null
@@ -6444,9 +6463,9 @@ export namespace Prisma {
     plan?: $Enums.Plan
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserCreateNestedManyWithoutOrgInput
     posts?: PostCreateNestedManyWithoutOrgInput
     socialAccounts?: SocialAccountCreateNestedManyWithoutOrgInput
+    users?: UserCreateNestedManyWithoutOrgInput
   }
 
   export type OrganizationUncheckedCreateInput = {
@@ -6458,9 +6477,9 @@ export namespace Prisma {
     plan?: $Enums.Plan
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserUncheckedCreateNestedManyWithoutOrgInput
     posts?: PostUncheckedCreateNestedManyWithoutOrgInput
     socialAccounts?: SocialAccountUncheckedCreateNestedManyWithoutOrgInput
+    users?: UserUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type OrganizationUpdateInput = {
@@ -6472,9 +6491,9 @@ export namespace Prisma {
     plan?: EnumPlanFieldUpdateOperationsInput | $Enums.Plan
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUpdateManyWithoutOrgNestedInput
     posts?: PostUpdateManyWithoutOrgNestedInput
     socialAccounts?: SocialAccountUpdateManyWithoutOrgNestedInput
+    users?: UserUpdateManyWithoutOrgNestedInput
   }
 
   export type OrganizationUncheckedUpdateInput = {
@@ -6486,9 +6505,9 @@ export namespace Prisma {
     plan?: EnumPlanFieldUpdateOperationsInput | $Enums.Plan
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUncheckedUpdateManyWithoutOrgNestedInput
     posts?: PostUncheckedUpdateManyWithoutOrgNestedInput
     socialAccounts?: SocialAccountUncheckedUpdateManyWithoutOrgNestedInput
+    users?: UserUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type OrganizationCreateManyInput = {
@@ -6534,7 +6553,7 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    org: OrganizationCreateNestedOneWithoutUsersInput
+    org?: OrganizationCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6545,7 +6564,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     role?: $Enums.Role
-    orgId: string
+    orgId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6560,7 +6579,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    org?: OrganizationUpdateOneRequiredWithoutUsersNestedInput
+    org?: OrganizationUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6571,7 +6590,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    orgId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6584,7 +6603,7 @@ export namespace Prisma {
     lastName?: string | null
     imageUrl?: string | null
     role?: $Enums.Role
-    orgId: string
+    orgId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6609,7 +6628,7 @@ export namespace Prisma {
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    orgId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6618,7 +6637,7 @@ export namespace Prisma {
     id?: string
     content: string
     mediaUrls?: PostCreatemediaUrlsInput | string[]
-    platfoms?: PostCreateplatfomsInput | $Enums.Platform[]
+    platforms?: PostCreateplatformsInput | $Enums.Platform[]
     status?: $Enums.PostStatus
     scheduledAt: Date | string
     publishedAt?: Date | string | null
@@ -6635,7 +6654,7 @@ export namespace Prisma {
     id?: string
     content: string
     mediaUrls?: PostCreatemediaUrlsInput | string[]
-    platfoms?: PostCreateplatfomsInput | $Enums.Platform[]
+    platforms?: PostCreateplatformsInput | $Enums.Platform[]
     status?: $Enums.PostStatus
     scheduledAt: Date | string
     publishedAt?: Date | string | null
@@ -6652,7 +6671,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6669,7 +6688,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6686,7 +6705,7 @@ export namespace Prisma {
     id?: string
     content: string
     mediaUrls?: PostCreatemediaUrlsInput | string[]
-    platfoms?: PostCreateplatfomsInput | $Enums.Platform[]
+    platforms?: PostCreateplatformsInput | $Enums.Platform[]
     status?: $Enums.PostStatus
     scheduledAt: Date | string
     publishedAt?: Date | string | null
@@ -6703,7 +6722,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6719,7 +6738,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6870,12 +6889,6 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
   export type PostListRelationFilter = {
     every?: PostWhereInput
     some?: PostWhereInput
@@ -6888,13 +6901,15 @@ export namespace Prisma {
     none?: SocialAccountWhereInput
   }
 
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
-  }
-
-  export type UserOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type PostOrderByRelationAggregateInput = {
@@ -6902,6 +6917,10 @@ export namespace Prisma {
   }
 
   export type SocialAccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7005,9 +7024,9 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type OrganizationScalarRelationFilter = {
-    is?: OrganizationWhereInput
-    isNot?: OrganizationWhereInput
+  export type OrganizationNullableScalarRelationFilter = {
+    is?: OrganizationWhereInput | null
+    isNot?: OrganizationWhereInput | null
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -7104,11 +7123,16 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type OrganizationScalarRelationFilter = {
+    is?: OrganizationWhereInput
+    isNot?: OrganizationWhereInput
+  }
+
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     content?: SortOrder
     mediaUrls?: SortOrder
-    platfoms?: SortOrder
+    platforms?: SortOrder
     status?: SortOrder
     scheduledAt?: SortOrder
     publishedAt?: SortOrder
@@ -7280,13 +7304,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type UserCreateNestedManyWithoutOrgInput = {
-    create?: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput> | UserCreateWithoutOrgInput[] | UserUncheckedCreateWithoutOrgInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutOrgInput | UserCreateOrConnectWithoutOrgInput[]
-    createMany?: UserCreateManyOrgInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
   export type PostCreateNestedManyWithoutOrgInput = {
     create?: XOR<PostCreateWithoutOrgInput, PostUncheckedCreateWithoutOrgInput> | PostCreateWithoutOrgInput[] | PostUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: PostCreateOrConnectWithoutOrgInput | PostCreateOrConnectWithoutOrgInput[]
@@ -7301,7 +7318,7 @@ export namespace Prisma {
     connect?: SocialAccountWhereUniqueInput | SocialAccountWhereUniqueInput[]
   }
 
-  export type UserUncheckedCreateNestedManyWithoutOrgInput = {
+  export type UserCreateNestedManyWithoutOrgInput = {
     create?: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput> | UserCreateWithoutOrgInput[] | UserUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: UserCreateOrConnectWithoutOrgInput | UserCreateOrConnectWithoutOrgInput[]
     createMany?: UserCreateManyOrgInputEnvelope
@@ -7322,6 +7339,13 @@ export namespace Prisma {
     connect?: SocialAccountWhereUniqueInput | SocialAccountWhereUniqueInput[]
   }
 
+  export type UserUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput> | UserCreateWithoutOrgInput[] | UserUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrgInput | UserCreateOrConnectWithoutOrgInput[]
+    createMany?: UserCreateManyOrgInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -7336,20 +7360,6 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type UserUpdateManyWithoutOrgNestedInput = {
-    create?: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput> | UserCreateWithoutOrgInput[] | UserUncheckedCreateWithoutOrgInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutOrgInput | UserCreateOrConnectWithoutOrgInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutOrgInput | UserUpsertWithWhereUniqueWithoutOrgInput[]
-    createMany?: UserCreateManyOrgInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutOrgInput | UserUpdateWithWhereUniqueWithoutOrgInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutOrgInput | UserUpdateManyWithWhereWithoutOrgInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type PostUpdateManyWithoutOrgNestedInput = {
@@ -7380,7 +7390,7 @@ export namespace Prisma {
     deleteMany?: SocialAccountScalarWhereInput | SocialAccountScalarWhereInput[]
   }
 
-  export type UserUncheckedUpdateManyWithoutOrgNestedInput = {
+  export type UserUpdateManyWithoutOrgNestedInput = {
     create?: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput> | UserCreateWithoutOrgInput[] | UserUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: UserCreateOrConnectWithoutOrgInput | UserCreateOrConnectWithoutOrgInput[]
     upsert?: UserUpsertWithWhereUniqueWithoutOrgInput | UserUpsertWithWhereUniqueWithoutOrgInput[]
@@ -7422,6 +7432,20 @@ export namespace Prisma {
     deleteMany?: SocialAccountScalarWhereInput | SocialAccountScalarWhereInput[]
   }
 
+  export type UserUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput> | UserCreateWithoutOrgInput[] | UserUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrgInput | UserCreateOrConnectWithoutOrgInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutOrgInput | UserUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: UserCreateManyOrgInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutOrgInput | UserUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutOrgInput | UserUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
   export type OrganizationCreateNestedOneWithoutUsersInput = {
     create?: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
     connectOrCreate?: OrganizationCreateOrConnectWithoutUsersInput
@@ -7432,10 +7456,12 @@ export namespace Prisma {
     set?: $Enums.Role
   }
 
-  export type OrganizationUpdateOneRequiredWithoutUsersNestedInput = {
+  export type OrganizationUpdateOneWithoutUsersNestedInput = {
     create?: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
     connectOrCreate?: OrganizationCreateOrConnectWithoutUsersInput
     upsert?: OrganizationUpsertWithoutUsersInput
+    disconnect?: OrganizationWhereInput | boolean
+    delete?: OrganizationWhereInput | boolean
     connect?: OrganizationWhereUniqueInput
     update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutUsersInput, OrganizationUpdateWithoutUsersInput>, OrganizationUncheckedUpdateWithoutUsersInput>
   }
@@ -7444,7 +7470,7 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type PostCreateplatfomsInput = {
+  export type PostCreateplatformsInput = {
     set: $Enums.Platform[]
   }
 
@@ -7459,7 +7485,7 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type PostUpdateplatfomsInput = {
+  export type PostUpdateplatformsInput = {
     set?: $Enums.Platform[]
     push?: $Enums.Platform | $Enums.Platform[]
   }
@@ -7752,45 +7778,11 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type UserCreateWithoutOrgInput = {
-    id?: string
-    clerkId: string
-    email: string
-    firstName?: string | null
-    lastName?: string | null
-    imageUrl?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserUncheckedCreateWithoutOrgInput = {
-    id?: string
-    clerkId: string
-    email: string
-    firstName?: string | null
-    lastName?: string | null
-    imageUrl?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserCreateOrConnectWithoutOrgInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput>
-  }
-
-  export type UserCreateManyOrgInputEnvelope = {
-    data: UserCreateManyOrgInput | UserCreateManyOrgInput[]
-    skipDuplicates?: boolean
-  }
-
   export type PostCreateWithoutOrgInput = {
     id?: string
     content: string
     mediaUrls?: PostCreatemediaUrlsInput | string[]
-    platfoms?: PostCreateplatfomsInput | $Enums.Platform[]
+    platforms?: PostCreateplatformsInput | $Enums.Platform[]
     status?: $Enums.PostStatus
     scheduledAt: Date | string
     publishedAt?: Date | string | null
@@ -7806,7 +7798,7 @@ export namespace Prisma {
     id?: string
     content: string
     mediaUrls?: PostCreatemediaUrlsInput | string[]
-    platfoms?: PostCreateplatfomsInput | $Enums.Platform[]
+    platforms?: PostCreateplatformsInput | $Enums.Platform[]
     status?: $Enums.PostStatus
     scheduledAt: Date | string
     publishedAt?: Date | string | null
@@ -7862,36 +7854,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithWhereUniqueWithoutOrgInput = {
+  export type UserCreateWithoutOrgInput = {
+    id?: string
+    clerkId: string
+    email: string
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutOrgInput = {
+    id?: string
+    clerkId: string
+    email: string
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutOrgInput = {
     where: UserWhereUniqueInput
-    update: XOR<UserUpdateWithoutOrgInput, UserUncheckedUpdateWithoutOrgInput>
     create: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput>
   }
 
-  export type UserUpdateWithWhereUniqueWithoutOrgInput = {
-    where: UserWhereUniqueInput
-    data: XOR<UserUpdateWithoutOrgInput, UserUncheckedUpdateWithoutOrgInput>
-  }
-
-  export type UserUpdateManyWithWhereWithoutOrgInput = {
-    where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutOrgInput>
-  }
-
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: StringFilter<"User"> | string
-    clerkId?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
-    firstName?: StringNullableFilter<"User"> | string | null
-    lastName?: StringNullableFilter<"User"> | string | null
-    imageUrl?: StringNullableFilter<"User"> | string | null
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    orgId?: StringFilter<"User"> | string
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+  export type UserCreateManyOrgInputEnvelope = {
+    data: UserCreateManyOrgInput | UserCreateManyOrgInput[]
+    skipDuplicates?: boolean
   }
 
   export type PostUpsertWithWhereUniqueWithoutOrgInput = {
@@ -7917,7 +7911,7 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
     mediaUrls?: StringNullableListFilter<"Post">
-    platfoms?: EnumPlatformNullableListFilter<"Post">
+    platforms?: EnumPlatformNullableListFilter<"Post">
     status?: EnumPostStatusFilter<"Post"> | $Enums.PostStatus
     scheduledAt?: DateTimeFilter<"Post"> | Date | string
     publishedAt?: DateTimeNullableFilter<"Post"> | Date | string | null
@@ -7960,6 +7954,38 @@ export namespace Prisma {
     isActive?: BoolFilter<"SocialAccount"> | boolean
     createdAt?: DateTimeFilter<"SocialAccount"> | Date | string
     updatedAt?: DateTimeFilter<"SocialAccount"> | Date | string
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutOrgInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutOrgInput, UserUncheckedUpdateWithoutOrgInput>
+    create: XOR<UserCreateWithoutOrgInput, UserUncheckedCreateWithoutOrgInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutOrgInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutOrgInput, UserUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutOrgInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    clerkId?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    firstName?: StringNullableFilter<"User"> | string | null
+    lastName?: StringNullableFilter<"User"> | string | null
+    imageUrl?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    orgId?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
   export type OrganizationCreateWithoutUsersInput = {
@@ -8039,8 +8065,8 @@ export namespace Prisma {
     plan?: $Enums.Plan
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserCreateNestedManyWithoutOrgInput
     socialAccounts?: SocialAccountCreateNestedManyWithoutOrgInput
+    users?: UserCreateNestedManyWithoutOrgInput
   }
 
   export type OrganizationUncheckedCreateWithoutPostsInput = {
@@ -8052,8 +8078,8 @@ export namespace Prisma {
     plan?: $Enums.Plan
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserUncheckedCreateNestedManyWithoutOrgInput
     socialAccounts?: SocialAccountUncheckedCreateNestedManyWithoutOrgInput
+    users?: UserUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type OrganizationCreateOrConnectWithoutPostsInput = {
@@ -8081,8 +8107,8 @@ export namespace Prisma {
     plan?: EnumPlanFieldUpdateOperationsInput | $Enums.Plan
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUpdateManyWithoutOrgNestedInput
     socialAccounts?: SocialAccountUpdateManyWithoutOrgNestedInput
+    users?: UserUpdateManyWithoutOrgNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutPostsInput = {
@@ -8094,8 +8120,8 @@ export namespace Prisma {
     plan?: EnumPlanFieldUpdateOperationsInput | $Enums.Plan
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUncheckedUpdateManyWithoutOrgNestedInput
     socialAccounts?: SocialAccountUncheckedUpdateManyWithoutOrgNestedInput
+    users?: UserUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type OrganizationCreateWithoutSocialAccountsInput = {
@@ -8107,8 +8133,8 @@ export namespace Prisma {
     plan?: $Enums.Plan
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserCreateNestedManyWithoutOrgInput
     posts?: PostCreateNestedManyWithoutOrgInput
+    users?: UserCreateNestedManyWithoutOrgInput
   }
 
   export type OrganizationUncheckedCreateWithoutSocialAccountsInput = {
@@ -8120,8 +8146,8 @@ export namespace Prisma {
     plan?: $Enums.Plan
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserUncheckedCreateNestedManyWithoutOrgInput
     posts?: PostUncheckedCreateNestedManyWithoutOrgInput
+    users?: UserUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type OrganizationCreateOrConnectWithoutSocialAccountsInput = {
@@ -8149,8 +8175,8 @@ export namespace Prisma {
     plan?: EnumPlanFieldUpdateOperationsInput | $Enums.Plan
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUpdateManyWithoutOrgNestedInput
     posts?: PostUpdateManyWithoutOrgNestedInput
+    users?: UserUpdateManyWithoutOrgNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutSocialAccountsInput = {
@@ -8162,27 +8188,15 @@ export namespace Prisma {
     plan?: EnumPlanFieldUpdateOperationsInput | $Enums.Plan
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUncheckedUpdateManyWithoutOrgNestedInput
     posts?: PostUncheckedUpdateManyWithoutOrgNestedInput
-  }
-
-  export type UserCreateManyOrgInput = {
-    id?: string
-    clerkId: string
-    email: string
-    firstName?: string | null
-    lastName?: string | null
-    imageUrl?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    users?: UserUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type PostCreateManyOrgInput = {
     id?: string
     content: string
     mediaUrls?: PostCreatemediaUrlsInput | string[]
-    platfoms?: PostCreateplatfomsInput | $Enums.Platform[]
+    platforms?: PostCreateplatformsInput | $Enums.Platform[]
     status?: $Enums.PostStatus
     scheduledAt: Date | string
     publishedAt?: Date | string | null
@@ -8206,47 +8220,23 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserUpdateWithoutOrgInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    clerkId?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateWithoutOrgInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    clerkId?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateManyWithoutOrgInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    clerkId?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    firstName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type UserCreateManyOrgInput = {
+    id?: string
+    clerkId: string
+    email: string
+    firstName?: string | null
+    lastName?: string | null
+    imageUrl?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PostUpdateWithoutOrgInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8262,7 +8252,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8278,7 +8268,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     mediaUrls?: PostUpdatemediaUrlsInput | string[]
-    platfoms?: PostUpdateplatfomsInput | $Enums.Platform[]
+    platforms?: PostUpdateplatformsInput | $Enums.Platform[]
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8322,6 +8312,42 @@ export namespace Prisma {
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerkId?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerkId?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerkId?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

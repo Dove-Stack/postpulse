@@ -9,10 +9,10 @@ export default async function HomePage() {
   const { userId } = await auth();
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col ">
       {/* Hero Section */}
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 ">
         <HeroSection isAuthenticated={!!userId} />
         <FeaturesSection />
         <PricingSection />

@@ -10,61 +10,54 @@ datasource db {
 }
 
 model Organization {
-  id               String   @id @default(cuid())
-  clerkOrgId       String   @unique
+  id               String          @id @default(cuid())
+  clerkOrgId       String          @unique
   name             String
-  slug             String   @unique
-  stripeCustomerId String?  @unique
-  plan             Plan     @default(FREE)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
-  users          User[]
-  posts          Post[]
-  socialAccounts SocialAccount[]
+  slug             String          @unique
+  stripeCustomerId String?         @unique
+  plan             Plan            @default(FREE)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  posts            Post[]
+  socialAccounts   SocialAccount[]
+  users            User[]
 
   @@map("organizations")
 }
 
 model User {
-  id        String  @id @default(cuid())
-  clerkId   String  @unique
-  email     String  @unique
+  id        String        @id @default(cuid())
+  clerkId   String        @unique
+  email     String        @unique
   firstName String?
   lastName  String?
   imageUrl  String?
-  role      Role    @default(MEMBER)
-
-  orgId String
-  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      Role          @default(MEMBER)
+  orgId     String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  org       Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@index([orgId])
   @@map("users")
 }
 
 model Post {
-  id        String     @id @default(cuid())
-  content   String     @db.Text
-  mediaUrls String[]
-  platfoms  Platform[]
-  status    PostStatus @default(SCHEDULED)
-
+  id          String       @id @default(cuid())
+  content     String
+  mediaUrls   String[]
+  platforms   Platform[]
+  status      PostStatus   @default(SCHEDULED)
   scheduledAt DateTime
   publishedAt DateTime?
-
-  orgId String
-  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-
-  views    Int @default(0)
-  likes    Int @default(0)
-  shares   Int @default(0)
-  comments Int @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  orgId       String
+  views       Int          @default(0)
+  likes       Int          @default(0)
+  shares      Int          @default(0)
+  comments    Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@index([orgId, scheduledAt])
   @@index([status, scheduledAt])
@@ -72,19 +65,17 @@ model Post {
 }
 
 model SocialAccount {
-  id           String    @id @default(cuid())
+  id           String       @id @default(cuid())
   platform     Platform
   accountName  String
-  accessToken  String    @db.Text
-  refreshToken String?   @db.Text
+  accessToken  String
+  refreshToken String?
   expiresAt    DateTime?
-
-  orgId String
-  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  orgId        String
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  org          Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@unique([orgId, platform, accountName])
   @@index([orgId])
