@@ -29,8 +29,6 @@ export async function createContext({req, res}:{req: FastifyRequest, res: Fastif
         }
     }
 
-
-    
     return baseContext
 }
 
