@@ -3,9 +3,15 @@
 
 import "dotenv/config";
 import Fastify from "fastify";
+import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import cors from "@fastify/cors";
-import { clerkPlugin, getAuth } from "@clerk/fastify";
+import { createContext } from "./trpc/context";
+import { ClerkFastifyOptions, clerkPlugin, getAuth } from "@clerk/fastify";
+import { appRouter, AppRouter } from "./trpc/app-router";
 import { webhookRoutes } from "./routes/webhooks";
+// import { TRPCError } from "@trpc/server";
+
+import type { FastifyTRPCPluginOptions } from "@trpc/server/adapters/fastify";
 
 const port = Number(process.env.PORT) || 3001;
 const host = process.env.NODE_ENV === "production" ? "0.0.0" : "127.0.0.1";
@@ -21,6 +27,8 @@ const server = Fastify({
       },
     },
   },
+
+  bodyLimit: 10 * 1024 * 1024,
 });
 
 await server.register(import("fastify-raw-body"), {
@@ -38,10 +46,25 @@ await server.register(cors, {
 });
 
 server.register(clerkPlugin, {
-  exclude: ["/webhooks"],
-} as any);
+  exclude: ["/webhooks/clerk"],
+} as ClerkFastifyOptions);
 
 server.register(webhookRoutes, { prefix: "webhooks" });
+
+server.register(fastifyTRPCPlugin, {
+  prefix: "/trpc",
+  trpcOptions: {
+    router: appRouter,
+    createContext,
+    onError(opts) {
+      const { path, error } = opts; // fully typed, no 'any'
+      server.log.error(
+        { path, error: error.message },
+        `❌ tRPC Error on ${path}`
+      );
+    },
+  },
+} satisfies FastifyTRPCPluginOptions<AppRouter>);
 
 server.get("/", async () => {
   return { message: "PostPulse API is running" };
@@ -72,6 +95,7 @@ const startServer = async () => {
       host,
     });
     console.log(`Server running -> http://localhost:3001`);
+    console.log("tRPC endpoint -> http:localhost:" + port + "/trpc");
   } catch (err) {
     server.log.error(err);
     process.exit(1);
@@ -88,6 +112,8 @@ startServer();
 // import cors from "@fastify/cors";
 // import { clerkPlugin, getAuth } from "@clerk/fastify";
 // import { webhookRoutes } from "./routes/webhooks.js";
+// import { router } from './trpc/trpc';
+// import { appRouter } from "./trpc/app-router";
 
 // // --- FIX: Smart .env Loading ---
 // const __filename = fileURLToPath(import.meta.url);
