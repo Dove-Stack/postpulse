@@ -1,35 +1,49 @@
 import { getAuth } from "@clerk/fastify";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { prisma } from "@postpulse/db";
+import { prisma , type Prisma} from "@postpulse/db";
 
-export async function createContext({req, res}:{req: FastifyRequest, res: FastifyReply}) {
-    const auth = getAuth(req);
+export type UserWithOrg = Prisma.UserGetPayload<{
+  include: { org: true };
+}>;
+
+export async function createContext({
+  req,
+  res,
+}: {
+  req: FastifyRequest;
+  res: FastifyReply;
+}) {
+  const auth = getAuth(req);
+
+  let user: UserWithOrg | null = null;
 
     const baseContext = {
-        req,
-        res,
-        prisma,
-        auth: {
-            userId: auth.userId,
-            orgId: auth.orgId
-        }
-    }
+      req,
+      res,
+      prisma,
+      auth: {
+        userId: auth.userId,
+        orgId: auth.orgId,
+      },
+    };
 
-    if (auth.userId) {
-        const user = await prisma.user.findUnique({
-            where: { clerkId: auth.userId},
-            include: {
-                org: true
-            },
-        })
-
-        return {
-            ...baseContext,
-            user,
-        }
-    }
-
-    return baseContext
+  if (auth.userId) {
+    user = await prisma.user.findUnique({
+      where: { clerkId: auth.userId },
+      include: {
+        org: true,
+      },
+    });
+  }
+  return {
+    ...baseContext,
+    user,
+  };
 }
 
-export type Context = Awaited<ReturnType<typeof createContext>>
+export type Context = Awaited<ReturnType<typeof createContext>>;
+
+
+
+
+
