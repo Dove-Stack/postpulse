@@ -1,10 +1,11 @@
 import { TRPCError } from "@trpc/server";
-import { middleware } from "./trpc";
+import {middleware} from "./root";
 import { forbidden, unauthorized } from "./error";
 import { captureException, setUser } from "@/lib/sentry";
 
 import { logToAxiom } from "@/lib/logger";
 import { checkRateLimit } from "@/lib/rate-limit";
+
 
 export const isUserAuthenticated = middleware(async ({ ctx, next }) => {
   if (!ctx.auth.userId) {
