@@ -86,7 +86,17 @@ server.get("/api/me", async (request, reply) => {
 });
 
 server.get("/health", async () => {
-  return { status: "healthy", timeStamp: new Date().toISOString() };
+  return {
+    status: "healthy",
+    timeStamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV,
+    services: {
+      axiom: !!process.env.AXIOM_TOKEN,
+      sentry: !!process.env.SENTRY_DSN,
+      redis: !!process.env.UPSTASH_REDIS_REST_URL,
+    },
+  };
 });
 
 const startServer = async () => {
