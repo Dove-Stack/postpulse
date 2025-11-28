@@ -58,8 +58,7 @@ server.register(fastifyTRPCPlugin, {
   trpcOptions: {
     router: appRouter,
     createContext,
-    onError(opts) {
-      const { path, error } = opts; // fully typed, no 'any'
+    onError({ path, error, type, ctx }) {
       server.log.error(
         {
           path,
