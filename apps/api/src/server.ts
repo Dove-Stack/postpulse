@@ -124,6 +124,9 @@ process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
 
 const startServer = async () => {
   try {
+    const port = Number(process.env.PORT) || 3001;
+    const host = process.env.NODE_ENV === "production" ? "0.0.0" : "127.0.0.1";
+
     await server.listen({
       port,
       host,
