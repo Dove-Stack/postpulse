@@ -3,15 +3,16 @@
 
 import "dotenv/config";
 import Fastify from "fastify";
-import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
+import {
+  fastifyTRPCPlugin,
+  FastifyTRPCPluginOptions,
+} from "@trpc/server/adapters/fastify";
 import cors from "@fastify/cors";
 import { createContext } from "./trpc/context";
 import { ClerkFastifyOptions, clerkPlugin, getAuth } from "@clerk/fastify";
 import { appRouter, AppRouter } from "./trpc/app-router";
 import { webhookRoutes } from "./routes/webhooks";
 // import { TRPCError } from "@trpc/server";
-
-import type { FastifyTRPCPluginOptions } from "@trpc/server/adapters/fastify";
 
 const port = Number(process.env.PORT) || 3001;
 const host = process.env.NODE_ENV === "production" ? "0.0.0" : "127.0.0.1";
