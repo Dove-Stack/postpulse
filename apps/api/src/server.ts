@@ -60,7 +60,17 @@ server.register(fastifyTRPCPlugin, {
     onError(opts) {
       const { path, error } = opts; // fully typed, no 'any'
       server.log.error(
-        { path, error: error.message },
+        {
+          path,
+          type,
+          error: {
+            message: error.message,
+            code: error.code,
+            cause: error.cause,
+          },
+          userId: ctx?.auth?.userId,
+          orgId: ctx?.auth?.orgId,
+        },
         `❌ tRPC Error on ${path}`
       );
     },
