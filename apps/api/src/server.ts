@@ -95,8 +95,22 @@ const startServer = async () => {
       port,
       host,
     });
-    console.log(`Server running -> http://localhost:3001`);
-    console.log("tRPC endpoint -> http:localhost:" + port + "/trpc");
+
+    console.log("PostPulse API is running");
+    console.log(`Environment --> ${process.env.NODE_ENV}`);
+    console.log(`Server running --> http://${host}:${port}`);
+    console.log(`tRPC --> http://${host}:${port}/trpc`);
+    console.log(`tRPC --> http://${host}:${port}/trpc`);
+    console.log(`Health --> http://${host}:${port}/health`);
+
+    if (process.env.AXIOM_TOKEN) {
+      console.log("Axiom logging enabled");
+    }
+    if (process.env.SENTRY_DSN) {
+      console.log("Sentry error tracking enabled");
+    }
+    if (process.env.UPSTASH_REDIS_REST_URL)
+      console.log("Upstash rate limiting enabled");
   } catch (err) {
     server.log.error(err);
     process.exit(1);
