@@ -12,7 +12,7 @@ import { createContext } from "./trpc/context";
 import { ClerkFastifyOptions, clerkPlugin, getAuth } from "@clerk/fastify";
 import { appRouter, AppRouter } from "./trpc/app-router";
 import { webhookRoutes } from "./routes/webhooks";
-// import { TRPCError } from "@trpc/server";
+
 
 const port = Number(process.env.PORT) || 3001;
 const host = process.env.NODE_ENV === "production" ? "0.0.0" : "127.0.0.1";
