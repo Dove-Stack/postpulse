@@ -109,6 +109,19 @@ server.get("/health", async () => {
   };
 });
 
+async function gracefulShutdown(signal: string) {
+  console.log(`\n${signal} recieved. Shuttin down now...`);
+
+  await flushLogs();
+  await server.close();
+
+  console.log("Server shut down complete");
+  process.exit(0);
+}
+
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+
 const startServer = async () => {
   try {
     await server.listen({
