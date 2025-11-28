@@ -12,6 +12,9 @@ import { createContext } from "./trpc/context";
 import { ClerkFastifyOptions, clerkPlugin, getAuth } from "@clerk/fastify";
 import { appRouter, AppRouter } from "./trpc/app-router";
 import { webhookRoutes } from "./routes/webhooks";
+import { initSentry } from "./lib/sentry";
+import { uptime } from "process";
+import { flushLogs } from "./lib/logger";
 
 initSentry();
 
