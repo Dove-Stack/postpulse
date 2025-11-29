@@ -20,17 +20,40 @@ export function initSentry() {
       ],
 
       beforeSend(event) {
-        if (event.request) {
-            delete event.request.cookies
-            delete event.request.headers?.['authorization']
-        }
-        return event
-      },
-    });
+      if (event.request?.headers) {
+        delete event.request.headers.authorization;
+        delete event.request.cookies;
+      }
 
-    console.log('Sentry initialized')
+      if (event.request?.url?.includes('/health')) {
+        return null;
+      }
+
+      return event;
+    },
+
+    ignoreErrors: [
+      'UNAUTHORIZED',
+      'FORBIDDEN',
+      'NOT_FOUND',
+      'TOO_MANY_REQUESTS',
+    ],
+  });
+
+  console.log('Sentry SDK Initialized');
 }
 
+// export function setupSentryFastify(app: FastifyInstance) {
+//     if(!process.env.SENTRY_DSN) return;
+
+//     app.register(fastifyIntegration());
+// }
+
+export function setupSentryInstrumentation() {
+  if (!process.env.SENTRY_DSN) return;
+
+  Sentry.setupFastifyErrorHandler;
+}
 
 export function captureException(error: Error, context?: Record<string, any>) {
     Sentry.captureException(error, {
