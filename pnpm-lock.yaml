@@ -69,6 +69,9 @@ importers:
       '@postpulse/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@sentry/cli':
+        specifier: ^2.58.2
+        version: 2.58.2
       '@sentry/node':
         specifier: ^10.27.0
         version: 10.27.0
