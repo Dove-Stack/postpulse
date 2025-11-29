@@ -127,7 +127,7 @@ export const logger = middleware(async ({ ctx, next, path, type }) => {
         { ...logData, error: result.error },
         `${type} ${path} failed`
       );
-      await logToAxiom("error", `${type} ${path} failed`, {
+      await logToAxiom('error', `${type} ${path} failed`, {
         ...logData,
         error: {
           message: result.error.message,
