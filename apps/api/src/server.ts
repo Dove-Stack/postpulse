@@ -178,6 +178,21 @@ server.get("/health", async () => {
   };
 });
 
+if (process.env.NODE_ENV === 'development') {
+  server.get('/debug-sentry', async (req, res) => {
+    Sentry.captureException(
+      new Error('Test Sentry error - This is Intentional!!!')
+    );
+    res.send({ status: 'Sentry debug logged safely' });
+  });
+}
+
+server.get('/safe-sentry-test', async (req, res) => {
+  Sentry.captureException(new Error('Safe Test Error'));
+  Sentry.logger.info('User triggered test log', { action: 'test_log' });
+  res.send({ status: 'Sentry Test Logged successfully' });
+});
+
 async function gracefulShutdown(signal: string) {
   console.log(`\n${signal} recieved. Shuttin down now...`);
 
