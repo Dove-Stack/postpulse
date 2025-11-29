@@ -102,7 +102,7 @@ await server.register(cors, {
 });
 
 server.register(clerkPlugin, {
-  exclude: ["/webhooks/clerk", "/health"],
+  exclude: ['/webhooks/clerk', '/health', '/trpc(.*)'],
 } as ClerkFastifyOptions);
 
 server.register(webhookRoutes, { prefix: "webhooks" });
