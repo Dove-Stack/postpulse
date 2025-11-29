@@ -27,8 +27,18 @@ export const isUserAuthenticated = middleware(async ({ ctx, next }) => {
   setUser({
     id: ctx.user.clerkId,
     email: ctx.user.email,
+    username: `${ctx.user.firstName} ${ctx.user.lastName}`.trim(),
     orgId: ctx.user.orgId ?? undefined,
   });
+
+  addBreadCrumb(
+    'User authenticated',
+    {
+      userId: ctx.user.clerkId,
+      orgId: ctx.user.orgId,
+    },
+    'auth'
+  );
 
   return next({
     ctx: {
