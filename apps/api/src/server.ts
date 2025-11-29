@@ -31,9 +31,60 @@ const server = Fastify({
   },
 
   bodyLimit: 10 * 1024 * 1024,
+
+  requestIdLogLabel: 'requestId',
+  requestIdHeader: 'x-request-id',
+  disableRequestLogging: false,
 });
 
-await server.register(import("fastify-raw-body"), {
+if (!process.env.SENTRY_DSN) {
+  server.addHook('onRequest', (request, reply, done) => {
+    Sentry.startSpan(
+      {
+        name: `${request.method} ${request.url}`,
+        op: 'http-server',
+        attributes: {
+          'http.method': request.method,
+          'http.url': request.url,
+          'http.route': request.routeOptions.url,
+        },
+      },
+      () => {
+        done();
+      }
+    );
+  });
+
+  server.setErrorHandler((error, request, reply) => {
+    const err = error instanceof Error ? error : new Error(String(error));
+
+    const status =
+      typeof (error as any).statusCode === 'number'
+        ? (error as any).statusCode
+        : 500;
+
+    Sentry.captureException(err, {
+      extra: {
+        method: request.method,
+        url: request.url,
+        headers: request.headers,
+        query: request.query,
+        params: request.params,
+      },
+    });
+
+    request.log.error(err);
+
+    reply.status(status).send({
+      error: {
+        message: err.message,
+        statusCode: status,
+      },
+    });
+  });
+}
+
+await server.register(import('fastify-raw-body'), {
   field: "rawBody",
   global: false,
   encoding: "utf8",
