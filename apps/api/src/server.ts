@@ -168,7 +168,9 @@ server.get("/health", async () => {
     timeStamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: process.env.NODE_ENV,
+    version: process.env.npm_package_version || '1.0.0',
     services: {
+      database: 'connected',
       axiom: !!process.env.AXIOM_TOKEN,
       sentry: !!process.env.SENTRY_DSN,
       redis: !!process.env.UPSTASH_REDIS_REST_URL,
