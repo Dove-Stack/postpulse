@@ -1,11 +1,15 @@
-import { TRPCError } from "@trpc/server";
-import {middleware} from "./root";
-import { forbidden, unauthorized } from "./error";
-import { captureException, setUser } from "@/lib/sentry";
+import { TRPCError } from '@trpc/server';
+import { middleware } from './root';
+import { forbidden, unauthorized } from './error';
+import {
+  addBreadCrumb,
+  captureException,
+  setTags,
+  setUser,
+} from '@/lib/sentry';
 
-import { logToAxiom } from "@/lib/logger";
-import { checkRateLimit } from "@/lib/rate-limit";
-
+import { logToAxiom } from '@/lib/logger';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export const isUserAuthenticated = middleware(async ({ ctx, next }) => {
   if (!ctx.auth.userId) {
@@ -55,16 +59,16 @@ export const requireOrganization = middleware(async ({ ctx, next }) => {
 
   if (!ctx.auth.orgId) {
     throw forbidden(
-      "You must be part of an organization to access this resource"
+      'You must be part of an organization to access this resource'
     );
   }
 
   if (!ctx.user) {
     const error = new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "User not found in database",
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'User not found in database',
     });
-    captureException(error, { userId: ctx.auth.userId });
+    captureException(error, { userId: ctx.auth.userId, orgId: ctx.auth.orgId });
     throw error;
   }
 
@@ -135,7 +139,16 @@ export const logger = middleware(async ({ ctx, next, path, type }) => {
           cause: result.error.cause,
         },
       });
-      captureException(new Error(result.error.message), logData);
+      if (
+        !['UNAUTHORIZED', 'FORBIDDEN', 'NOT_FOUND', 'BAD_REQUEST'].includes(
+          result.error.code as string
+        )
+      ) {
+        captureException(new Error(result.error.message), {
+          ...logData,
+          errorCode: result.error.code,
+        });
+      }
     }
     return result;
   } catch (error) {
@@ -154,7 +167,7 @@ export const logger = middleware(async ({ ctx, next, path, type }) => {
         orgId: ctx.auth.orgId,
       });
 
-      await logToAxiom("error", `${type} ${path} crashed`, {
+      await logToAxiom('error', `${type} ${path} crashed`, {
         requestId,
         path,
         type,
@@ -172,13 +185,16 @@ export const rateLimit = middleware(async ({ ctx, next }) => {
     return next();
   }
 
-  const plan = ctx.user?.org?.plan || "FREE";
+  const plan = ctx.user?.org?.plan || 'FREE';
 
-  const indetifier = `${ctx.auth.userId}:${ctx.auth.orgId || "no-org"}`;
+  const indentifier = `${ctx.auth.userId}:${ctx.auth.orgId || 'no-org'}`;
 
-  const { remaining } = await checkRateLimit(indetifier, plan);
+  addBreadCrumb('Rate limit check', { plan, indentifier }, 'ratelimit');
 
-  ctx.res.header("X-RateLimit-Remaining", remaining.toString());
+  const { remaining } = await checkRateLimit(indentifier, plan);
+
+  ctx.res.header('X-RateLimit-Remaining', remaining.toString());
+  ctx.res.header('X-RateLimit-Plan', plan);
 
   return next();
 });
