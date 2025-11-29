@@ -221,7 +221,9 @@ const startServer = async () => {
     console.log(`Server running --> http://${host}:${port}`);
     console.log(`tRPC --> http://${host}:${port}/trpc`);
     console.log(`tRPC --> http://${host}:${port}/trpc`);
-    console.log(`Health --> http://${host}:${port}/health`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Debug Sentry: http://${host}:${port}/debug-sentry \n`);
+    }
 
     if (process.env.AXIOM_TOKEN) {
       console.log("Axiom logging enabled");
