@@ -216,11 +216,11 @@ const startServer = async () => {
       host,
     });
 
-    console.log("PostPulse API is running");
-    console.log(`Environment --> ${process.env.NODE_ENV}`);
-    console.log(`Server running --> http://${host}:${port}`);
-    console.log(`tRPC --> http://${host}:${port}/trpc`);
-    console.log(`tRPC --> http://${host}:${port}/trpc`);
+    console.log('\nPostPulse API is running \n');
+    console.log(`Environment --> ${process.env.NODE_ENV} \n`);
+    console.log(`Server running --> http://${host}:${port} \n`);
+    console.log(`tRPC --> http://${host}:${port}/trpc \n`);
+    console.log(`Health --> http://${host}:${port}/health \n`);
     if (process.env.NODE_ENV === 'development') {
       console.log(`Debug Sentry: http://${host}:${port}/debug-sentry \n`);
     }
