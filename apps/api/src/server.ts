@@ -127,6 +127,19 @@ server.register(fastifyTRPCPlugin, {
         },
         `❌ tRPC Error on ${path}`
       );
+
+      Sentry.captureException(error, {
+        extra: {
+          path,
+          type,
+          userId: ctx?.auth?.userId,
+          orgId: ctx?.auth?.orgId,
+        },
+        tags: {
+          trpc_path: path,
+          trpc_type: type,
+        },
+      });
     },
   },
 } satisfies FastifyTRPCPluginOptions<AppRouter>);
