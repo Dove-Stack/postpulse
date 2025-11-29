@@ -84,12 +84,18 @@ export function addBreadCrumb(
 }
 
 
-export function  setUser(user: {id: string; email?: string; orgId?: string}) {
-    Sentry.setUser({
-        id: user.id,
-        email: user.email,
-        orgId: user.orgId
-    })
+export function setUser(user: {
+  id: string;
+  email?: string;
+  orgId?: string;
+  username?: string;
+}) {
+  Sentry.setUser({
+    id: user.id,
+    email: user.email,
+    orgId: user.orgId,
+    username: user.username,
+  });
 }
 
 
