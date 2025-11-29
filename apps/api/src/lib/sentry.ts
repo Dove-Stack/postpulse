@@ -1,13 +1,13 @@
-import * as Sentry from '@sentry/node'
-import { nodeProfilingIntegration,  } from '@sentry/profiling-node'
+import * as Sentry from '@sentry/node';
+// import { nodeProfilingIntegration,  } from '@sentry/profiling-nod'
 
 export function initSentry() {
-    if (!process.env.SENTRY_DSN) {
+  if (!process.env.SENTRY_DSN) {
     console.warn(' SENTRY_DSN not set. Error tracking disabled');
     return;
   }
 
-    Sentry.init({
+  Sentry.init({
     dsn: process.env.SENTRY_DSN,
     environment: process.env.NODE_ENV || 'development',
 
@@ -22,7 +22,7 @@ export function initSentry() {
       Sentry.consoleLoggingIntegration({ levels: ['log', 'warn', 'error'] }),
     ],
 
-      beforeSend(event) {
+    beforeSend(event) {
       if (event.request?.headers) {
         delete event.request.headers.authorization;
         delete event.request.cookies;
@@ -86,7 +86,6 @@ export function addBreadCrumb(
   });
 }
 
-
 export function setUser(user: {
   id: string;
   email?: string;
@@ -100,7 +99,6 @@ export function setUser(user: {
     username: user.username,
   });
 }
-
 
 export function clearUser() {
   Sentry.setUser(null);
