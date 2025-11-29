@@ -3,9 +3,9 @@ import { nodeProfilingIntegration,  } from '@sentry/profiling-node'
 
 export function initSentry() {
     if (!process.env.SENTRY_DSN) {
-        console.warn(" SENTRY_DSN not set. Error tracking disabled");
-        return
-    }
+    console.warn(' SENTRY_DSN not set. Error tracking disabled');
+    return;
+  }
 
     Sentry.init({
     dsn: process.env.SENTRY_DSN,
