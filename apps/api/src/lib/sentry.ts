@@ -100,5 +100,33 @@ export function setUser(user: {
 
 
 export function clearUser() {
-    Sentry.setUser(null)
+  Sentry.setUser(null);
+}
+
+export function setTag(key: string, value: string) {
+  Sentry.setTag(key, value);
+}
+
+export function setTags(tags: Record<string, string>) {
+  Sentry.setTags(tags);
+}
+
+export function startTransaction(name: string, op: string) {
+  return Sentry.startInactiveSpan({
+    name,
+    op,
+  });
+}
+
+export function withSentry<T>(fn: () => Promise<T>): Promise<T> {
+  return Sentry.startSpan({ name: fn.name || 'anonymous' }, async () => {
+    try {
+      return await fn();
+    } catch (error) {
+      if (error instanceof Error) {
+        captureException(error);
+      }
+      throw error;
+    }
+  });
 }
