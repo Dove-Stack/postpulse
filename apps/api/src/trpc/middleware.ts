@@ -119,7 +119,9 @@ export const logger = middleware(async ({ ctx, next, path, type }) => {
 
     if (result.ok) {
       ctx.req.log.info(logData, `${type} ${path} completed in ${duration}ms`);
-      await logToAxiom("info", `${type} ${path} completed`, logData);
+      await logToAxiom('info', `${type} ${path} completed`, logData);
+
+      addBreadCrumb(`${type} ${path} completed`, { duration }, 'request');
     } else {
       ctx.req.log.error(
         { ...logData, error: result.error },
