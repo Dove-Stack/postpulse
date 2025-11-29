@@ -88,6 +88,16 @@ export const logger = middleware(async ({ ctx, next, path, type }) => {
 
   const requestId = ctx.req.id;
 
+  addBreadCrumb(
+    `${type} ${path} started`,
+    {
+      requestId,
+      userId: ctx.auth.userId,
+      orgId: ctx.auth.orgId,
+    },
+    'request'
+  );
+
   let result: Awaited<ReturnType<typeof next>>;
 
   try {
