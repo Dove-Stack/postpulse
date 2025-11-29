@@ -56,19 +56,31 @@ export function setupSentryInstrumentation() {
 }
 
 export function captureException(error: Error, context?: Record<string, any>) {
-    Sentry.captureException(error, {
-        extra: context
-    })
+  Sentry.captureException(error, {
+    extra: context,
+    level: 'error',
+  });
 }
 
+export function captureMessage(
+  message: string,
+  level: 'info' | 'warning' | 'error' = 'info'
+) {
+  Sentry.captureMessage(message, level);
+}
 
-
-export function addBreadCrumb(message: string, data?: Record<string, any>) {
-    Sentry.addBreadcrumb({
-        message,
-        level: 'info',
-        data,
-    })
+export function addBreadCrumb(
+  message: string,
+  data?: Record<string, any>,
+  category?: string
+) {
+  Sentry.addBreadcrumb({
+    message,
+    level: 'info',
+    data,
+    category: category || 'custom',
+    timestamp: Date.now() / 1000,
+  });
 }
 
 
