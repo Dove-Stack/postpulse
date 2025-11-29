@@ -93,7 +93,10 @@ await server.register(import('fastify-raw-body'), {
 });
 
 await server.register(cors, {
-  origin: "http://localhost:3000",
+  origin:
+    process.env.NODE_ENV === 'production'
+      ? process.env.FRONTEND_URL
+      : ['http://localhost:3000', 'http://localhost:3001'],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true,
 });
