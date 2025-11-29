@@ -68,6 +68,12 @@ export const requireOrganization = middleware(async ({ ctx, next }) => {
     throw error;
   }
 
+  setTags({
+    org_id: ctx.auth.orgId,
+    org_name: ctx.user.org?.name ?? 'none',
+    org_plan: ctx.user.org?.plan ?? 'none',
+  });
+
   return next({
     ctx: {
       ...ctx,
