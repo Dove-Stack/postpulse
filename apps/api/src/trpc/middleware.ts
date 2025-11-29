@@ -14,10 +14,13 @@ export const isUserAuthenticated = middleware(async ({ ctx, next }) => {
 
   if (!ctx.user) {
     const error = new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "user not found in database. Please contact support.",
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'user not found in database. Please contact support.',
     });
-    captureException(error, { userId: ctx.auth.userId });
+    captureException(error, {
+      userId: ctx.auth.userId,
+      context: 'isUserAuthenticated middleware',
+    });
     throw error;
   }
 
