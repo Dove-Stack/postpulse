@@ -16,8 +16,12 @@ export function initSentry() {
       profilesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
       integrations: [
-         nodeProfilingIntegration(),
-      ],
+      //  nodeProfilingIntegration(),
+      Sentry.httpIntegration(),
+      Sentry.nativeNodeFetchIntegration(),
+      Sentry.prismaIntegration(),
+      Sentry.consoleLoggingIntegration({ levels: ['log', 'warn', 'error'] }),
+    ],
 
       beforeSend(event) {
       if (event.request?.headers) {
