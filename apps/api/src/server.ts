@@ -1,31 +1,31 @@
 // import dotenv from "dotenv";
 // dotenv.config();
 
-import "dotenv/config";
-import Fastify from "fastify";
+import 'dotenv/config';
+import Fastify from 'fastify';
 import {
   fastifyTRPCPlugin,
   FastifyTRPCPluginOptions,
-} from "@trpc/server/adapters/fastify";
-import cors from "@fastify/cors";
-import { createContext } from "./trpc/context";
-import { ClerkFastifyOptions, clerkPlugin, getAuth } from "@clerk/fastify";
-import { appRouter, AppRouter } from "./trpc/app-router";
-import { webhookRoutes } from "./routes/webhooks";
-import { initSentry } from "./lib/sentry";
-import { uptime } from "process";
-import { flushLogs } from "./lib/logger";
+} from '@trpc/server/adapters/fastify';
+import cors from '@fastify/cors';
+import { createContext } from './trpc/context';
+import { ClerkFastifyOptions, clerkPlugin, getAuth } from '@clerk/fastify';
+import { appRouter, AppRouter } from './trpc/app-router';
+import { webhookRoutes } from './routes/webhooks';
+import * as Sentry from '@sentry/node';
+import { initSentry } from './lib/sentry';
+import { flushLogs } from './lib/logger';
 
 initSentry();
 
 const server = Fastify({
   logger: {
     transport: {
-      target: "pino-pretty",
+      target: 'pino-pretty',
       options: {
         colorize: true,
-        translateTime: "HH:MM:ss Z",
-        ignore: "pid,hostname",
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
       },
     },
   },
@@ -85,9 +85,9 @@ if (!process.env.SENTRY_DSN) {
 }
 
 await server.register(import('fastify-raw-body'), {
-  field: "rawBody",
+  field: 'rawBody',
   global: false,
-  encoding: "utf8",
+  encoding: 'utf8',
   runFirst: true,
   routes: [],
 });
@@ -97,7 +97,7 @@ await server.register(cors, {
     process.env.NODE_ENV === 'production'
       ? process.env.FRONTEND_URL
       : ['http://localhost:3000', 'http://localhost:3001'],
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   credentials: true,
 });
 
@@ -105,10 +105,10 @@ server.register(clerkPlugin, {
   exclude: ['/webhooks/clerk', '/health', '/trpc(.*)'],
 } as ClerkFastifyOptions);
 
-server.register(webhookRoutes, { prefix: "webhooks" });
+server.register(webhookRoutes, { prefix: 'webhooks' });
 
 server.register(fastifyTRPCPlugin, {
-  prefix: "/trpc",
+  prefix: '/trpc',
   trpcOptions: {
     router: appRouter,
     createContext,
@@ -144,27 +144,27 @@ server.register(fastifyTRPCPlugin, {
   },
 } satisfies FastifyTRPCPluginOptions<AppRouter>);
 
-server.get("/", async () => {
-  return { message: "PostPulse API is running" };
+server.get('/', async () => {
+  return { message: '\nPostPulse API is running \n' };
 });
 
-server.get("/api/me", async (request, reply) => {
+server.get('/api/me', async (request, reply) => {
   const { userId, orgId } = getAuth(request);
 
   if (!userId) {
-    return reply.status(401).send({ error: "Login required" });
+    return reply.status(401).send({ error: 'Login required' });
   }
 
   return {
     userId,
     orgId,
-    message: "You are authenticated ",
+    message: 'You are authenticated ',
   };
 });
 
-server.get("/health", async () => {
+server.get('/health', async () => {
   return {
-    status: "healthy",
+    status: 'healthy',
     timeStamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: process.env.NODE_ENV,
@@ -196,20 +196,23 @@ server.get('/safe-sentry-test', async (req, res) => {
 async function gracefulShutdown(signal: string) {
   console.log(`\n${signal} recieved. Shuttin down now...`);
 
+  await Sentry.close(2000);
+
   await flushLogs();
   await server.close();
 
-  console.log("Server shut down complete");
+  console.log('Server shut down complete');
   process.exit(0);
 }
 
-process.on("SIGINT", () => gracefulShutdown("SIGINT"));
-process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
 const startServer = async () => {
   try {
     const port = Number(process.env.PORT) || 3001;
-    const host = process.env.NODE_ENV === "production" ? "0.0.0" : "127.0.0.1";
+    const host =
+      process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1';
 
     await server.listen({
       port,
@@ -221,20 +224,22 @@ const startServer = async () => {
     console.log(`Server running --> http://${host}:${port} \n`);
     console.log(`tRPC --> http://${host}:${port}/trpc \n`);
     console.log(`Health --> http://${host}:${port}/health \n`);
+
     if (process.env.NODE_ENV === 'development') {
       console.log(`Debug Sentry: http://${host}:${port}/debug-sentry \n`);
     }
 
     if (process.env.AXIOM_TOKEN) {
-      console.log("Axiom logging enabled");
+      console.log('Axiom logging enabled');
     }
     if (process.env.SENTRY_DSN) {
-      console.log("Sentry error tracking enabled");
+      console.log('Sentry error tracking enabled');
     }
     if (process.env.UPSTASH_REDIS_REST_URL)
-      console.log("Upstash rate limiting enabled");
+      console.log('Upstash rate limiting enabled');
   } catch (err) {
     server.log.error(err);
+    Sentry.captureException(err);
     process.exit(1);
   }
 };
@@ -251,6 +256,7 @@ startServer();
 // import { webhookRoutes } from "./routes/webhooks.js";
 // import { router } from './trpc/trpc';
 // import { appRouter } from "./trpc/app-router";
+import { request } from 'http';
 
 // // --- FIX: Smart .env Loading ---
 // const __filename = fileURLToPath(import.meta.url);
