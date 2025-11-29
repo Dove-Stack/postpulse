@@ -113,7 +113,7 @@ export const logger = middleware(async ({ ctx, next, path, type }) => {
       orgId: ctx.auth.orgId,
       success: result.ok,
       timeStamp: new Date().toISOString(),
-      userAgent: ctx.req.headers["user-agent"],
+      userAgent: ctx.req.headers['user-agent'],
       ip: ctx.req.ip,
     };
 
